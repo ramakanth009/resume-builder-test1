@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        #resume-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border:"3px solid #BFC6CD"
+        }
+
+        #header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #name {
+            color: #0066cc;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        #contact {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: #0066cc;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .job {
+            margin-bottom: 20px;
+        }
+
+        #job-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #job-company {
+            font-weight: bold;
+        }
+
+        #job-date {
+            color: #666;
+            font-size: 14px;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        #skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        #interests-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .divider {
+            border-top: 1px solid #eee;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="resume-container">
+        <div id="header">
+            <div id="name">OLIVIA WILSON</div>
+            <div id="contact">Address | Mail | Website</div>
+        </div>
+
+        <div id="profile" class="section">
+            <div id="profile-title" class="section-title">CHEMICAL ENGINEER</div>
+            <div id="profile-description">A practical Chemical Engineer with Significant Experience in Process Designs, I have worked with some organizations, ensuring a grounded approach to my profession.</div>
+        </div>
+
+        <div id="work-experience" class="section">
+            <div id="work-title" class="section-title">WORK EXPERIENCE</div>
+            
+            <div id="job-1" class="job">
+                <div id="job-title">
+                    <span id="job-company">Policy Manager | LexraMax Inc</span>
+                    <span id="job-date">Oct 2020 - present</span>
+                </div>
+                <ul>
+                    <li>Formulate and review policies as regards Industry Improvement</li>
+                    <li>Create a functional and technical application of set policies</li>
+                </ul>
+            </div>
+
+            <div id="job-2" class="job">
+                <div id="job-title">
+                    <span id="job-company">Quality Control Engineer | KrystaPointe Water</span>
+                    <span id="job-date">Jan 2019 - Sept 2020</span>
+                </div>
+                <ul>
+                    <li>Collect and Analyse water samples from different stages of Production</li>
+                    <li>Make Recommendations on Improvement based on my analysis</li>
+                    <li>Supervise Implementations of Recommendations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="skills" class="section">
+            <div id="skills-title" class="section-title">SKILLS</div>
+            <div id="skills-grid">
+                <ul>
+                    <li>Effective Time Management</li>
+                    <li>Creative Problem-Solving</li>
+                    <li>Active Listening</li>
+                </ul>
+                <ul>
+                    <li>Efficiency Under Pressure</li>
+                    <li>Critical Thinking</li>
+                    <li>Talented Customer Services</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="education" class="section">
+            <div id="education-title" class="section-title">EDUCATION</div>
+            
+            <div id="edu-1" class="job">
+                <div id="job-title">
+                    <span id="job-company">MSc Process Engineering | Dandilton</span>
+                    <span id="job-date">Oct 2017 - Sept 2018</span>
+                </div>
+                <ul>
+                    <li>Studied Process planning, coordination, and efficiency</li>
+                    <li>Worked with various industries on launching efficient Process Systems</li>
+                </ul>
+            </div>
+
+            <div id="edu-2" class="job">
+                <div id="job-title">
+                    <span id="job-company">BEng Chemical Engineering | Royal Clickton</span>
+                    <span id="job-date">Jan 2012 - Sept 2016</span>
+                </div>
+                <ul>
+                    <li>GPA 3.30</li>
+                    <li>Minor in Process Management</li>
+                    <li>Thesis in Modelling and Analysis of Process Efficiency in a Cement Plant</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="interests" class="section">
+            <div id="interests-title" class="section-title">INTERESTS</div>
+            <div id="interests-grid">
+                <ul>
+                    <li>Simulation Design</li>
+                    <li>Chess</li>
+                    <li>Volunteer Work</li>
+                </ul>
+                <ul>
+                    <li>International Affairs</li>
+                    <li>Particulate Matters</li>
+                    <li>Football</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="awards" class="section">
+            <div id="awards-title" class="section-title">AWARDS</div>
+            <ul>
+                <li>Most Innovative Employee of the Year, LexraMax (2020)</li>
+                <li>Overall Best Employee of the Year, CrystaPointe (2019)</li>
+                <li>Project Leader, Dandilton (2018)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

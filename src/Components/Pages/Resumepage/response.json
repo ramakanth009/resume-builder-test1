@@ -1,0 +1,48 @@
+{
+  "message": "Resume generated successfully.",
+  "resume": {
+    "academicProjects": [
+      {
+        "description": "Conducted in-depth analysis of contractual obligations in mergers and acquisitions, utilizing legal research skills to identify key issues and provide recommendations for improvement.",
+        "name": "Analysis of Contractual Obligations in M&A"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Corporate Governance Certification"
+      }
+    ],
+    "education": [
+      {
+        "degree": "LL.B.",
+        "graduationYear": 2022,
+        "institution": "Yale Law School",
+        "specialization": "Corporate Law"
+      }
+    ],
+    "header": {
+      "email": "emily.law@example.com",
+      "name": "Clark",
+      "phone": "1223456789"
+    },
+    "skills": [
+      "Contract Drafting",
+      "Corporate Governance",
+      "Legal Research"
+    ],
+    "summary": "Results-driven Corporate Lawyer with a strong background in contract drafting, corporate governance, and legal research. Proven ability to analyze complex legal issues and provide effective solutions. Seeking a challenging role that leverages my skills and experience to drive business growth.",
+    "workExperience": [
+      {
+        "company": "GHI Law Firm",
+        "duration": "Jan 2023 - Present",
+        "position": "Legal Intern",
+        "responsibilities": [
+          "Assisted in drafting and reviewing contracts",
+          "Conducted legal research on corporate governance issues",
+          "Provided support to attorneys in preparing for court appearances"
+        ]
+      }
+    ]
+  },
+  "status": "success"
+}
