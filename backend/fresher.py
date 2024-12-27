@@ -82,7 +82,7 @@ def generate_fresher_resume():
     # Prompt for the API to generate a detailed JSON resume
     prompt = f"""
     Create an ATS-friendly professional resume in JSON format with the following sections:
-    - Header: Contains name, email, phone.
+    - Header: Contains name, email, phone, github and linkedin profile links if provided.
     - Summary: A professional detailed summary tailored to the target role and user's provided data.
     - Education: Degree, specialization, institution, and graduation year.
     - Skills: A list of skills collected from analysing the user's data.
@@ -94,6 +94,8 @@ def generate_fresher_resume():
     Name: {data['name']}
     Email: {data['email']}
     Phone: {data['phone']}
+    GitHub: {data.get('github', '')}
+    LinkedIn: {data.get('linkedin', '')}
     Target Role: {data['target_role']}
     Education: {data['degree']} in {data['specialization']} from {data['institution']}, Graduated in {data['graduation_year']}
     Skills: {skills_text}

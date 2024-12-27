@@ -1,96 +1,96 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useCallback } from "react";
 import {
   Box,
   Typography,
   TextField,
-  MenuItem,
   Button,
   IconButton,
   Stack,
-  Container,
   CircularProgress,
   Alert,
-  styled
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete"; // Fixed import
+import DeleteIcon from "@mui/icons-material/Delete";
 import ResumeTemplate from "./resumetemplate";
-import { makeStyles } from '@mui/styles';
+import { transformResumeData } from "./resumehandler";
 
-const useStyles = makeStyles({
+const useStyles = {
   inputField: {
     width: "calc(38ch + 20px)",
-    margin: "10px 10px !important"
+    margin: "10px 10px !important",
   },
   box: {
     height: "100vh",
     overflow: "hidden",
-    padding: "20px"
+    padding: "20px",
   },
   contentWrapper: {
     display: "flex",
     gap: "20px",
-    height: "calc(100% - 40px)"
+    height: "calc(100% - 40px)",
   },
   formSection: {
     flex: 1,
     overflowY: "auto",
     padding: "20px",
     backgroundColor: "#ffffff",
-    borderRadius: "8px"
+    borderRadius: "8px",
   },
   previewSection: {
     flex: 1,
     overflowY: "auto",
     backgroundColor: "#f5f5f5",
     borderRadius: "8px",
-    padding: "20px"
+    padding: "20px",
   },
   sectionTitle: {
     margin: "20px 0 10px",
     color: "#1976d2",
-    fontWeight: 600
+    fontWeight: 600,
   },
   generateButton: {
     marginTop: "20px",
-    marginBottom: "20px"
-  }
-});
+    marginBottom: "20px",
+  },
+};
 
 const ResumeBuilder = () => {
-  const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [previewData, setPreviewData] = useState(null);
   const [formData, setFormData] = useState({
-    // Match the API request structure
     name: "",
     email: "",
     phone: "",
+    github: "",
+    linkedin: "",
     target_role: "",
-    work_experience: [{
-      position: "",
-      company_name: "",
-      duration: ""
-    }],
+    work_experience: [
+      {
+        position: "",
+        company_name: "",
+        duration: "",
+      },
+    ],
     skills: [""],
-    Academic_projects: [{
-      name: "",
-      description: "",
-      skills_used: ""
-    }],
+    Academic_projects: [
+      {
+        name: "",
+        description: "",
+        skills_used: "",
+      },
+    ],
     degree: "",
     specialization: "",
     institution: "",
     graduation_year: new Date().getFullYear(),
-    certifications: [""]
+    certifications: [""],
   });
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -100,19 +100,15 @@ const ResumeBuilder = () => {
       ...prev,
       work_experience: [
         ...prev.work_experience,
-        {
-          position: "",
-          company_name: "",
-          duration: ""
-        }
-      ]
+        { position: "", company_name: "", duration: "" },
+      ],
     }));
   };
 
   const handleRemoveWorkExperience = (index) => {
     setFormData((prev) => ({
       ...prev,
-      work_experience: prev.work_experience.filter((_, i) => i !== index)
+      work_experience: prev.work_experience.filter((_, i) => i !== index),
     }));
   };
 
@@ -121,7 +117,7 @@ const ResumeBuilder = () => {
       ...prev,
       work_experience: prev.work_experience.map((exp, i) =>
         i === index ? { ...exp, [field]: value } : exp
-      )
+      ),
     }));
   };
 
@@ -129,21 +125,21 @@ const ResumeBuilder = () => {
   const handleAddSkill = () => {
     setFormData((prev) => ({
       ...prev,
-      skills: [...prev.skills, ""]
+      skills: [...prev.skills, ""],
     }));
   };
 
   const handleRemoveSkill = (index) => {
     setFormData((prev) => ({
       ...prev,
-      skills: prev.skills.filter((_, i) => i !== index)
+      skills: prev.skills.filter((_, i) => i !== index),
     }));
   };
 
   const handleSkillChange = (index, value) => {
     setFormData((prev) => ({
       ...prev,
-      skills: prev.skills.map((skill, i) => (i === index ? value : skill))
+      skills: prev.skills.map((skill, i) => (i === index ? value : skill)),
     }));
   };
 
@@ -153,19 +149,15 @@ const ResumeBuilder = () => {
       ...prev,
       Academic_projects: [
         ...prev.Academic_projects,
-        {
-          name: "",
-          description: "",
-          skills_used: ""
-        }
-      ]
+        { name: "", description: "", skills_used: "" },
+      ],
     }));
   };
 
   const handleRemoveProject = (index) => {
     setFormData((prev) => ({
       ...prev,
-      Academic_projects: prev.Academic_projects.filter((_, i) => i !== index)
+      Academic_projects: prev.Academic_projects.filter((_, i) => i !== index),
     }));
   };
 
@@ -174,7 +166,7 @@ const ResumeBuilder = () => {
       ...prev,
       Academic_projects: prev.Academic_projects.map((project, i) =>
         i === index ? { ...project, [field]: value } : project
-      )
+      ),
     }));
   };
 
@@ -182,14 +174,14 @@ const ResumeBuilder = () => {
   const handleAddCertification = () => {
     setFormData((prev) => ({
       ...prev,
-      certifications: [...prev.certifications, ""]
+      certifications: [...prev.certifications, ""],
     }));
   };
 
   const handleRemoveCertification = (index) => {
     setFormData((prev) => ({
       ...prev,
-      certifications: prev.certifications.filter((_, i) => i !== index)
+      certifications: prev.certifications.filter((_, i) => i !== index),
     }));
   };
 
@@ -198,7 +190,7 @@ const ResumeBuilder = () => {
       ...prev,
       certifications: prev.certifications.map((cert, i) =>
         i === index ? value : cert
-      )
+      ),
     }));
   };
 
@@ -208,107 +200,108 @@ const ResumeBuilder = () => {
     setPreviewData(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/generate_fresher_resume", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
+      const response = await fetch(
+        "http://127.0.0.1:5000/generate_fresher_resume",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await response.json();
       console.log("Raw API Response:", data);
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to generate resume');
+        throw new Error(data.message || "Failed to generate resume");
       }
 
-      // Transform API response to match template structure
-      const transformedData = {
-        header: {
-          Name: data.resume.Header?.Name || data.resume.Header?.name || "",
-          Email: data.resume.Header?.Email || data.resume.Header?.email || "",
-          Phone: data.resume.Header?.Phone || data.resume.Header?.phone || ""
-        },
-        summary: data.resume.Summary?.["Professional Summary"] || data.resume.Summary || "",
-        skills: Array.isArray(data.resume.Skills) ? data.resume.Skills : [],
-        workExperience: (data.resume["Work Experience"] || []).map(exp => ({
-          position: exp.Position,
-          company: exp.Company,
-          duration: exp.Duration,
-          responsibilities: exp.Responsibilities || []
-        })),
-        education: [{
-          degree: data.resume.Education?.Degree || "",
-          specialization: data.resume.Education?.Specialization || "",
-          institution: data.resume.Education?.Institution || "",
-          graduationYear: data.resume.Education?.["Graduation Year"] || ""
-        }],
-        academicProjects: Array.isArray(data.resume["Academic Projects"]) 
-          ? data.resume["Academic Projects"].map(proj => ({
-              name: proj["Project Name"] || "",
-              description: proj.Description || "",
-              technologies: proj.Technologies || [],
-              duration: proj.Duration || "",
-              role: proj.Role || ""
-            }))
-          : [],
-        certifications: data.resume.Certifications || []
-      };
+      if (!data || !data.resume) {
+        throw new Error("Invalid API response structure");
+      }
 
+      const transformedData = transformResumeData(data);
       console.log("Transformed Data:", transformedData);
       setPreviewData(transformedData);
-
     } catch (err) {
-      console.error("Error:", err);
-      setError(err.message || "Failed to generate resume. Please try again.");
+      console.error("Error in handleGeneratePreview:", err);
+      let errorMessage =
+        err.message || "Failed to generate resume. Please try again.";
+
+      if (err.message.includes("Invalid API response structure")) {
+        errorMessage =
+          "The resume couldn't be generated due to invalid data. Please check your inputs and try again.";
+      } else if (err.message.includes("Failed to transform")) {
+        errorMessage =
+          "There was an error processing the resume data. Please try again with different inputs.";
+      }
+
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
+  const validateForm = () => {
+    const requiredFields = ["name", "email", "phone", "target_role", "degree"];
+    const missingFields = requiredFields.filter((field) => !formData[field]);
+
+    if (missingFields.length > 0) {
+      setError(
+        `Please fill in all required fields: ${missingFields.join(", ")}`
+      );
+      return false;
+    }
+    return true;
+  };
+
   return (
-    <Box className={classes.box}>
-      <Box className={classes.contentWrapper}>
-        <Box className={classes.formSection}>
+    <Box sx={useStyles.box}>
+      <Box sx={useStyles.contentWrapper}>
+        {/* Form Section */}
+        <Box sx={useStyles.formSection}>
           <Typography variant="h4" gutterBottom>
             Resume Builder
           </Typography>
 
           <Box component="form">
             {/* Personal Info Section */}
-            <Typography variant="h6" className={classes.sectionTitle}>Personal Info</Typography>
+            <Typography variant="h6" sx={useStyles.sectionTitle}>
+              Personal Info
+            </Typography>
             <Box>
               <TextField
                 required
                 label="Full Name"
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
-                className={classes.inputField}
+                sx={useStyles.inputField}
               />
               <TextField
                 required
                 label="Email"
                 value={formData.email}
                 onChange={(e) => handleInputChange("email", e.target.value)}
-                className={classes.inputField}
+                sx={useStyles.inputField}
               />
               <TextField
                 required
                 label="Phone"
                 value={formData.phone}
                 onChange={(e) => handleInputChange("phone", e.target.value)}
-                className={classes.inputField}
-              />
-              <TextField
-                label="LinkedIn"
-                value={formData.linkedin}
-                onChange={(e) => handleInputChange("linkedin", e.target.value)}
-                className={classes.inputField}
+                sx={useStyles.inputField}
               />
               <TextField
                 label="GitHub"
                 value={formData.github}
                 onChange={(e) => handleInputChange("github", e.target.value)}
-                className={classes.inputField}
+                sx={useStyles.inputField}
+              />
+              <TextField
+                label="LinkedIn"
+                value={formData.linkedin}
+                onChange={(e) => handleInputChange("linkedin", e.target.value)}
+                sx={useStyles.inputField}
               />
               <TextField
                 required
@@ -317,21 +310,27 @@ const ResumeBuilder = () => {
                 onChange={(e) =>
                   handleInputChange("target_role", e.target.value)
                 }
-                className={classes.inputField}
+                sx={useStyles.inputField}
               />
             </Box>
 
             {/* Work Experience Section */}
-            <Typography variant="h6" className={classes.sectionTitle}>Work Experience</Typography>
+            <Typography variant="h6" sx={useStyles.sectionTitle}>
+              Work Experience
+            </Typography>
             {formData.work_experience.map((exp, index) => (
               <Box key={index}>
                 <TextField
                   label="Position"
                   value={exp.position}
                   onChange={(e) =>
-                    handleWorkExperienceChange(index, "position", e.target.value)
+                    handleWorkExperienceChange(
+                      index,
+                      "position",
+                      e.target.value
+                    )
                   }
-                  className={classes.inputField}
+                  sx={useStyles.inputField}
                 />
                 <TextField
                   label="Company Name"
@@ -343,16 +342,20 @@ const ResumeBuilder = () => {
                       e.target.value
                     )
                   }
-                  className={classes.inputField}
+                  sx={useStyles.inputField}
                 />
                 <TextField
                   label="Duration"
                   value={exp.duration}
                   onChange={(e) =>
-                    handleWorkExperienceChange(index, "duration", e.target.value)
+                    handleWorkExperienceChange(
+                      index,
+                      "duration",
+                      e.target.value
+                    )
                   }
                   placeholder="e.g., Jan 2024 - Present"
-                  className={classes.inputField}
+                  sx={useStyles.inputField}
                 />
                 <IconButton
                   onClick={() =>
@@ -371,7 +374,9 @@ const ResumeBuilder = () => {
             ))}
 
             {/* Skills Section */}
-            <Typography variant="h6" className={classes.sectionTitle}>Skills</Typography>
+            <Typography variant="h6" sx={useStyles.sectionTitle}>
+              Skills
+            </Typography>
             {formData.skills.map((skill, index) => (
               <Stack key={index} direction="row" alignItems="center">
                 <TextField
@@ -379,7 +384,7 @@ const ResumeBuilder = () => {
                   label={`Skill ${index + 1}`}
                   value={skill}
                   onChange={(e) => handleSkillChange(index, e.target.value)}
-                  className={classes.inputField}
+                  sx={useStyles.inputField}
                 />
                 <IconButton
                   onClick={() =>
@@ -398,7 +403,9 @@ const ResumeBuilder = () => {
             ))}
 
             {/* Academic Projects Section */}
-            <Typography variant="h6" className={classes.sectionTitle}>Academic Projects</Typography>
+            <Typography variant="h6" sx={useStyles.sectionTitle}>
+              Academic Projects
+            </Typography>
             {formData.Academic_projects.map((project, index) => (
               <Box key={index}>
                 <TextField
@@ -408,7 +415,7 @@ const ResumeBuilder = () => {
                   onChange={(e) =>
                     handleProjectChange(index, "name", e.target.value)
                   }
-                  className={classes.inputField}
+                  sx={useStyles.inputField}
                 />
                 <TextField
                   required
@@ -417,7 +424,7 @@ const ResumeBuilder = () => {
                   onChange={(e) =>
                     handleProjectChange(index, "skills_used", e.target.value)
                   }
-                  className={classes.inputField}
+                  sx={useStyles.inputField}
                 />
                 <IconButton
                   onClick={() =>
@@ -436,14 +443,16 @@ const ResumeBuilder = () => {
             ))}
 
             {/* Education Section */}
-            <Typography variant="h6" className={classes.sectionTitle}>Education</Typography>
+            <Typography variant="h6" sx={useStyles.sectionTitle}>
+              Education
+            </Typography>
             <Box>
               <TextField
                 required
                 label="Degree"
                 value={formData.degree}
                 onChange={(e) => handleInputChange("degree", e.target.value)}
-                className={classes.inputField}
+                sx={useStyles.inputField}
               />
               <TextField
                 required
@@ -452,7 +461,7 @@ const ResumeBuilder = () => {
                 onChange={(e) =>
                   handleInputChange("specialization", e.target.value)
                 }
-                className={classes.inputField}
+                sx={useStyles.inputField}
               />
               <TextField
                 required
@@ -461,7 +470,7 @@ const ResumeBuilder = () => {
                 onChange={(e) =>
                   handleInputChange("institution", e.target.value)
                 }
-                className={classes.inputField}
+                sx={useStyles.inputField}
               />
               <TextField
                 required
@@ -470,12 +479,14 @@ const ResumeBuilder = () => {
                 onChange={(e) =>
                   handleInputChange("graduation_year", e.target.value)
                 }
-                className={classes.inputField}
+                sx={useStyles.inputField}
               />
             </Box>
 
             {/* Certifications Section */}
-            <Typography variant="h6" className={classes.sectionTitle}>Certifications</Typography>
+            <Typography variant="h6" sx={useStyles.sectionTitle}>
+              Certifications
+            </Typography>
             {formData.certifications.map((cert, index) => (
               <Stack key={index} direction="row" alignItems="center">
                 <TextField
@@ -484,7 +495,7 @@ const ResumeBuilder = () => {
                   onChange={(e) =>
                     handleCertificationChange(index, e.target.value)
                   }
-                  className={classes.inputField}
+                  sx={useStyles.inputField}
                 />
                 <IconButton
                   onClick={() =>
@@ -506,19 +517,25 @@ const ResumeBuilder = () => {
               variant="contained"
               color="primary"
               fullWidth
-              onClick={handleGeneratePreview}
+              onClick={() => {
+                if (validateForm()) {
+                  handleGeneratePreview();
+                }
+              }}
               disabled={loading}
-              className={classes.generateButton}
+              sx={useStyles.generateButton}
             >
               {loading ? <CircularProgress size={24} /> : "Generate Resume"}
             </Button>
           </Box>
         </Box>
 
-        <Box className={classes.previewSection}>
+        {/* Preview Section */}
+        <Box sx={useStyles.previewSection}>
           <Typography variant="h5" gutterBottom>
             Preview
           </Typography>
+
           {loading && (
             <Box
               display="flex"
@@ -536,15 +553,10 @@ const ResumeBuilder = () => {
             </Alert>
           )}
 
-          {previewData && (
-            <>
-              <Box sx={{ mb: 2 }}>
-                <Typography variant="caption" color="text.secondary">
-                  Preview data loaded
-                </Typography>
-              </Box>
+          {previewData && !loading && !error && (
+            <Box sx={{ mt: 2 }}>
               <ResumeTemplate resumeData={previewData} />
-            </>
+            </Box>
           )}
         </Box>
       </Box>
