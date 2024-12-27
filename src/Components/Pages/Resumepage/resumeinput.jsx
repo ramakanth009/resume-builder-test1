@@ -16,7 +16,7 @@ import { transformResumeData } from "./resumehandler";
 
 const useStyles = {
   inputField: {
-    width: "calc(38ch + 20px)",
+    width: "calc(28ch + 20px)",
     margin: "10px 10px !important",
   },
   box: {

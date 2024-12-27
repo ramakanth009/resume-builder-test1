@@ -87,7 +87,7 @@ def generate_fresher_resume():
     - Education: Degree, specialization, institution, and graduation year.
     - Skills: A list of skills collected from analysing the user's data.
     - Certifications: A list of certifications.
-    - Work Experience: List of jobs with company name, position, duration, and elaborated responsibilities.
+    - Work Experience: List of jobs with company name, position, duration, and elaborated responsibilities baesd on position and experience duration in points.
     - Academic Projects: List of projects with name and detailed description based on the skills used.
 
     Here are the user details:
