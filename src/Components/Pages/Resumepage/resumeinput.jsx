@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ResumeTemplate from "./resumetemplate";
+import ResumeTemplate from "./resumetemplate2";
 import { transformResumeData } from "./resumehandler";
 
 const useStyles = {
@@ -64,6 +64,7 @@ const ResumeBuilder = () => {
     phone: "",
     github: "",
     linkedin: "",
+    portfolio: "",
     target_role: "",
     work_experience: [
       {
@@ -301,6 +302,12 @@ const ResumeBuilder = () => {
                 label="LinkedIn"
                 value={formData.linkedin}
                 onChange={(e) => handleInputChange("linkedin", e.target.value)}
+                sx={useStyles.inputField}
+              />
+              <TextField
+                label="Portfolio"
+                value={formData.portfolio}
+                onChange={(e) => handleInputChange("portfolio", e.target.value)}
                 sx={useStyles.inputField}
               />
               <TextField

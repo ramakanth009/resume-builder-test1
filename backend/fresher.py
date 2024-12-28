@@ -80,14 +80,18 @@ def generate_fresher_resume():
     ])
 
     # Prompt for the API to generate a detailed JSON resume
+    # Validate portfolio URL if provided
+    if data.get('Portfolio') and not re.match(r'^https?://(?:[\w]+[-\.])[\w]+(?:/[\w\-./?%&=])?$', data.get('portfolio')):
+        return jsonify({'status': 'error', 'message': 'Invalid portfolio URL format'}), 400
+
     prompt = f"""
     Create an ATS-friendly professional resume in JSON format with the following sections:
-    - Header: Contains name, email, phone, github and linkedin profile links if provided.
-    - Summary: A professional detailed summary tailored to the target role and user's provided data.
+    - Header: Contains name, email, phone, linkedin, portfolio and github links if provided.
+    - Summary: A professional detailed summary tailored to the target role and user's provided information.
     - Education: Degree, specialization, institution, and graduation year.
-    - Skills: A list of skills collected from analysing the user's data.
+    - Skills: A list of skills collected from the entire user's information in the resume.
     - Certifications: A list of certifications.
-    - Work Experience: List of jobs with company name, position, duration, and elaborated responsibilities baesd on position and experience duration in points.
+    - Work Experience: List of jobs with company name, position, duration, and briefly elaborated responsibilities in about 4 long points.
     - Academic Projects: List of projects with name and detailed description based on the skills used.
 
     Here are the user details:
@@ -96,6 +100,7 @@ def generate_fresher_resume():
     Phone: {data['phone']}
     GitHub: {data.get('github', '')}
     LinkedIn: {data.get('linkedin', '')}
+    Portfolio: {data.get('portfolio', '')}
     Target Role: {data['target_role']}
     Education: {data['degree']} in {data['specialization']} from {data['institution']}, Graduated in {data['graduation_year']}
     Skills: {skills_text}
@@ -107,6 +112,24 @@ def generate_fresher_resume():
     """
 
     # Payload for API
+    def validate_url(url, platform):
+        if not url:  # Allow empty URLs
+            return True
+        
+        patterns = {
+            'github': r'^https?://(?:www\.)?github\.com/[\w-]+/?$',
+            'linkedin': r'^https?://(?:www\.)?linkedin\.com/in/[\w-]+/?$'
+        }
+        
+        return bool(re.match(patterns[platform], url))
+
+    # Validate GitHub and LinkedIn URLs if provided
+    if data.get('github') and not validate_url(data['github'], 'github'):
+        return jsonify({'status': 'error', 'message': 'Invalid GitHub URL format'}), 400
+
+    if data.get('linkedin') and not validate_url(data['linkedin'], 'linkedin'):
+        return jsonify({'status': 'error', 'message': 'Invalid LinkedIn URL format'}), 400
+
     payload = {
         "model": "llama3-8b-8192",
         "messages": [
@@ -130,7 +153,7 @@ def generate_fresher_resume():
         generated_content = response.json().get('choices', [{}])[0].get('message', {}).get('content', '')
 
         # Extract JSON from response
-        json_match = re.search(r'```json\n(.*?)\n```', generated_content, re.DOTALL)
+        json_match = re.search(r'json\n(.*?)\n', generated_content, re.DOTALL)
         if json_match:
             cleaned_json = json_match.group(1)
         else:

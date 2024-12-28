@@ -267,40 +267,52 @@ const ResumeTemplate = ({ resumeData }) => {
             >
               Academic Projects
             </Typography>
-            <List>
+            <List sx={{ mt: 2 }}>
               {processedData.projects.map((project, index) => (
-                <ListItem key={index} className={classes.projectItem}>
-                  <Typography variant="h6" className={classes.projectTitle}>
-                    {project.name}
-                  </Typography>
-                  <Typography variant="body1">{project.description}</Typography>
-                  {project.skillsUsed && (
-                    <Box className={classes.projectSkills}>
-                      {Array.isArray(project.skillsUsed) ? (
-                        project.skillsUsed.map((skill, idx) => (
-                          <Chip
-                            key={idx}
-                            label={skill}
-                            size="small"
-                            variant="outlined"
-                            color="primary"
-                          />
-                        ))
-                      ) : (
+                <React.Fragment key={index}>
+                  <ListItem
+                    className={classes.projectItem}
+                    sx={{
+                      padding: "8px 0",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      className={classes.projectTitle}
+                      sx={{ fontWeight: 600 }}
+                    >
+                      {project.name}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "#666666",
+                        mt: 1,
+                      }}
+                    >
+                      {project.description}
+                    </Typography>
+                    {project.technologies &&
+                      project.technologies.length > 0 && (
                         <Typography
-                          variant="subtitle2"
-                          color="text.secondary"
-                          sx={{ color: "#2365C8", textTransform: "uppercase" }}
+                          variant="body2"
+                          sx={{
+                            mt: 1,
+                            color: "#666666",
+                            fontStyle: "italic",
+                          }}
                         >
-                          Skills: {project.skillsUsed}
+                          Technologies: {project.technologies.join(", ")}
                         </Typography>
                       )}
-                    </Box>
-                  )}
+                  </ListItem>
                   {index < processedData.projects.length - 1 && (
-                    <Divider className={classes.projectDivider} />
+                    <Divider sx={{ my: 2 }} />
                   )}
-                </ListItem>
+                </React.Fragment>
               ))}
             </List>
           </Box>

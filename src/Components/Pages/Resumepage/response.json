@@ -1,48 +1,70 @@
 {
   "message": "Resume generated successfully.",
   "resume": {
-    "academicProjects": [
-      {
-        "description": "Conducted in-depth analysis of contractual obligations in mergers and acquisitions, utilizing legal research skills to identify key issues and provide recommendations for improvement.",
-        "name": "Analysis of Contractual Obligations in M&A"
-      }
-    ],
-    "certifications": [
-      {
-        "name": "Corporate Governance Certification"
-      }
-    ],
-    "education": [
-      {
-        "degree": "LL.B.",
-        "graduationYear": 2022,
-        "institution": "Yale Law School",
-        "specialization": "Corporate Law"
-      }
-    ],
-    "header": {
-      "email": "emily.law@example.com",
-      "name": "Clark",
-      "phone": "1223456789"
-    },
-    "skills": [
-      "Contract Drafting",
-      "Corporate Governance",
-      "Legal Research"
-    ],
-    "summary": "Results-driven Corporate Lawyer with a strong background in contract drafting, corporate governance, and legal research. Proven ability to analyze complex legal issues and provide effective solutions. Seeking a challenging role that leverages my skills and experience to drive business growth.",
-    "workExperience": [
-      {
-        "company": "GHI Law Firm",
-        "duration": "Jan 2023 - Present",
-        "position": "Legal Intern",
-        "responsibilities": [
-          "Assisted in drafting and reviewing contracts",
-          "Conducted legal research on corporate governance issues",
-          "Provided support to attorneys in preparing for court appearances"
-        ]
-      }
-    ]
+      "academic_projects": [
+          {
+              "description": "Designed and developed a scalable e-commerce analytics platform using Python, React, and AWS. The platform provided real-time analytics and insights to e-commerce businesses, enabling data-driven decision making.",
+              "name": "E-Commerce Analytics Platform"
+          },
+          {
+              "description": "Developed a healthcare management system using TypeScript, Node.js, PostgreSQL, and Docker. The system enabled healthcare providers to manage patient records, schedule appointments, and track medical history.",
+              "name": "Healthcare Management System"
+          }
+      ],
+      "certifications": [
+          "AWS Certified Solutions Architect - Associate",
+          "MongoDB Certified Developer",
+          "Google Cloud Professional Developer"
+      ],
+      "education": {
+          "degree": "Master of Science in Information Systems",
+          "graduation_year": 2000,
+          "institution": "Stanford University",
+          "specialization": ""
+      },
+      "header": {
+          "email": "sarah.johnson@example.com",
+          "github": "https://github.com/sarahjohnson",
+          "linkedin": "https://www.linkedin.com/in/sarahjohnson",
+          "name": "Sarah Johnson",
+          "phone": "9381256998",
+          "portfolio": "https://portfolio.example.com/my-work"
+      },
+      "skills": [
+          "Python",
+          "JavaScript",
+          "TypeScript",
+          "React.js",
+          "Node.js"
+      ],
+      "summary": {
+          "body": "As a seasoned developer, I excel in collaborating with cross-functional teams to identify and prioritize project requirements, design and develop software solutions, and ensure seamless integration with existing systems. My expertise in full-stack development, cloud computing, and data analytics enables me to deliver innovative solutions that meet the evolving needs of businesses.",
+          "title": "Results-driven Senior Full Stack Developer with 20+ years of experience in designing and developing scalable, efficient, and secure software solutions. Proficient in a range of programming languages, including Python, JavaScript, and TypeScript. Proven track record of delivering high-quality projects on time and on budget. Strong understanding of cloud computing, data analytics, and agile development methodologies."
+      },
+      "work_experience": [
+          {
+              "company": "DataTech Innovations",
+              "duration": "Jan 2023 - Present",
+              "position": "Software Developer",
+              "responsibilities": [
+                  "Designed and developed multiple software applications using React, Node.js, and TypeScript",
+                  "Collaborated with cross-functional teams to identify and prioritize project requirements",
+                  "Ensured seamless integration with existing systems and databases",
+                  "Implemented automated testing and deployment scripts using Jenkins and Docker"
+              ]
+          },
+          {
+              "company": "TechCorp Solutions",
+              "duration": "July 2021 - Dec 2022",
+              "position": "Software Engineering Intern",
+              "responsibilities": [
+                  "Assisted in the development of multiple software applications using Python, React, and AWS",
+                  "Worked on data analytics and visualization using Python and MongoDB",
+                  "Collaborated with the development team to identify and prioritize project requirements",
+                  "Implemented automated testing and deployment scripts using Jenkins and Docker"
+              ]
+          }
+      ]
   },
   "status": "success"
 }
