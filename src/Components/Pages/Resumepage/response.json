@@ -1,70 +1,81 @@
 {
-  "message": "Resume generated successfully.",
-  "resume": {
-      "academic_projects": [
-          {
-              "description": "Designed and developed a scalable e-commerce analytics platform using Python, React, and AWS. The platform provided real-time analytics and insights to e-commerce businesses, enabling data-driven decision making.",
-              "name": "E-Commerce Analytics Platform"
-          },
-          {
-              "description": "Developed a healthcare management system using TypeScript, Node.js, PostgreSQL, and Docker. The system enabled healthcare providers to manage patient records, schedule appointments, and track medical history.",
-              "name": "Healthcare Management System"
-          }
-      ],
-      "certifications": [
-          "AWS Certified Solutions Architect - Associate",
-          "MongoDB Certified Developer",
-          "Google Cloud Professional Developer"
-      ],
-      "education": {
-          "degree": "Master of Science in Information Systems",
-          "graduation_year": 2000,
-          "institution": "Stanford University",
-          "specialization": ""
-      },
-      "header": {
-          "email": "sarah.johnson@example.com",
-          "github": "https://github.com/sarahjohnson",
-          "linkedin": "https://www.linkedin.com/in/sarahjohnson",
-          "name": "Sarah Johnson",
-          "phone": "9381256998",
-          "portfolio": "https://portfolio.example.com/my-work"
-      },
-      "skills": [
-          "Python",
-          "JavaScript",
-          "TypeScript",
-          "React.js",
-          "Node.js"
-      ],
-      "summary": {
-          "body": "As a seasoned developer, I excel in collaborating with cross-functional teams to identify and prioritize project requirements, design and develop software solutions, and ensure seamless integration with existing systems. My expertise in full-stack development, cloud computing, and data analytics enables me to deliver innovative solutions that meet the evolving needs of businesses.",
-          "title": "Results-driven Senior Full Stack Developer with 20+ years of experience in designing and developing scalable, efficient, and secure software solutions. Proficient in a range of programming languages, including Python, JavaScript, and TypeScript. Proven track record of delivering high-quality projects on time and on budget. Strong understanding of cloud computing, data analytics, and agile development methodologies."
-      },
-      "work_experience": [
-          {
-              "company": "DataTech Innovations",
-              "duration": "Jan 2023 - Present",
-              "position": "Software Developer",
-              "responsibilities": [
-                  "Designed and developed multiple software applications using React, Node.js, and TypeScript",
-                  "Collaborated with cross-functional teams to identify and prioritize project requirements",
-                  "Ensured seamless integration with existing systems and databases",
-                  "Implemented automated testing and deployment scripts using Jenkins and Docker"
-              ]
-          },
-          {
-              "company": "TechCorp Solutions",
-              "duration": "July 2021 - Dec 2022",
-              "position": "Software Engineering Intern",
-              "responsibilities": [
-                  "Assisted in the development of multiple software applications using Python, React, and AWS",
-                  "Worked on data analytics and visualization using Python and MongoDB",
-                  "Collaborated with the development team to identify and prioritize project requirements",
-                  "Implemented automated testing and deployment scripts using Jenkins and Docker"
-              ]
-          }
-      ]
-  },
-  "status": "success"
+    "message": "Resume generated successfully.",
+    "resume": {
+        "certifications": [
+            "Python Certificate by Hackerrank"
+        ],
+        "education": [
+            {
+                "degree": "Bachelor of Technology in Electronics and Communication Engineering",
+                "graduationYear": "2020",
+                "institution": "Usha Rama College of Engineering and Technology"
+            }
+        ],
+        "header": {
+            "email": "kiran@email.com",
+            "github": "",
+            "linkedin": "",
+            "name": "Kiran",
+            "phone": "9874564322",
+            "portfolio": ""
+        },
+        "projects": [
+            {
+                "description": "Designed and developed a Python-based application using Fastapi and MySQL to extract features from pan cards. Utilized Python libraries such as OpenCV and pytesseract for image processing and OCR. Achieved an accuracy of 95% in feature extraction. Skills used: Python, Fastapi, MySQL.",
+                "name": "Pan Card Features Extraction"
+            },
+            {
+                "description": "Developed a Rasa-based chatbot using Python and HTML to provide customer support. Implemented natural language processing techniques to improve chatbot accuracy. Skills used: Rasa Framework, Python, HTML.",
+                "name": "Rasa Chatbot"
+            },
+            {
+                "description": "Created a Python-based resume builder using Generative AI and LLMs to generate resumes. Utilized Postgresql for data storage and retrieval. Achieved an accuracy of 90% in resume generation. Skills used: Generative AI, LLM, Python, Postgresql.",
+                "name": "Resume Builder"
+            },
+            {
+                "description": "Developed a Python-based sentiment analysis tool using NLP and Google LLM API to analyze customer feedback. Achieved an accuracy of 85% in sentiment classification. Skills used: NLP, Google LLM API, Python.",
+                "name": "Sentiment Analysis"
+            },
+            {
+                "description": "Created a Python-based ATS resume matcher using NLP and Google LLM API to match resumes with job descriptions. Achieved an accuracy of 80% in resume matching. Skills used: NLP, Google LLM API, Python.",
+                "name": "ATS Resume matcher"
+            }
+        ],
+        "skills": [
+            "Python",
+            "MySQL",
+            "Postgresql",
+            "Generative AI",
+            "NLP",
+            "LLMs",
+            "Django",
+            "Flask",
+            "Fastapi",
+            "Postman"
+        ],
+        "summary": "Highly motivated and detail-oriented Python Developer with a strong foundation in machine learning, natural language processing, and software development. Proficient in Python, MySQL, Postgresql, and various frameworks such as Django, Flask, and Fastapi.",
+        "workExperience": [
+            {
+                "companyName": "Ascend International",
+                "duration": "Jan 2023 - May 2024",
+                "position": "Machine Learning Intern",
+                "responsibilities": [
+                    "Designed and implemented machine learning algorithms using Python and NumPy, resulting in a 25% increase in model accuracy.",
+                    "Collaborated with the team to develop a basic deep learning model, utilizing TensorFlow and Keras frameworks.",
+                    "Conducted data preprocessing and feature engineering to improve model performance, reducing training time by 30%."
+                ]
+            },
+            {
+                "companyName": "Sun E-Learning",
+                "duration": "May 2024 - Present",
+                "position": "Python Developer Intern",
+                "responsibilities": [
+                    "Developed a Python-based data analysis tool using Pandas and NumPy, streamlining data processing by 40%.",
+                    "Implemented a Python script using requests and BeautifulSoup to scrape and parse data from a website, improving data accuracy by 20%.",
+                    "Collaborated with the team to design and implement a Python-based web application using Flask, resulting in a 50% increase in user engagement."
+                ]
+            }
+        ]
+    },
+    "status": "success"
 }

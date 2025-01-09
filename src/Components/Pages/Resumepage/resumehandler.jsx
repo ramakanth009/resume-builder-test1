@@ -1,209 +1,202 @@
-// export const transformHeaderData = (headerData = {}) => ({
-//   Name: headerData?.Name || headerData?.name || "",
-//   Email: headerData?.Email || headerData?.email || "",
-//   Phone: headerData?.Phone || headerData?.phone || "",
-//   GitHub: headerData?.GitHub || headerData?.github || "", 
-//   LinkedIn: headerData?.LinkedIn || headerData?.linkedin || "",
-//   Portfolio: headerData?.Portfolio || headerData?.portfolio || "", // Added Portfolio field
-// });
-
-// export const transformWorkExperience = (workExp = []) => {
-//   if (!Array.isArray(workExp)) return [];
-
-//   return workExp.map((exp) => ({
-//     position: exp?.Position || exp?.position || "",
-//     company: exp?.Company || exp?.company_name || "",
-//     duration: exp?.Duration || exp?.duration || "",
-//     responsibilities: Array.isArray(exp?.Responsibilities)
-//       ? exp.Responsibilities
-//       : Array.isArray(exp?.responsibilities)
-//       ? exp.responsibilities
-//       : typeof exp?.Responsibilities === "string"
-//       ? [exp.Responsibilities]
-//       : typeof exp?.responsibilities === "string"
-//       ? [exp.responsibilities]
-//       : [],
-//   }));
-// };
-
-// export const transformEducation = (edu = {}) => ({
-//   degree: edu?.Degree || edu?.degree || "",
-//   specialization: edu?.Specialization || edu?.specialization || "",
-//   institution: edu?.Institution || edu?.institution || "",
-//   graduationYear: edu?.["Graduation Year"] || edu?.graduation_year || "",
-// });
-
-// export const transformProjects = (projects = []) => {
-//   if (!Array.isArray(projects)) return [];
-
-//   return projects.map((proj) => ({
-//     name: proj?.["Project Name"] || proj?.name || "",
-//     description: proj?.Description || proj?.description || "",
-//     technologies: Array.isArray(proj?.Technologies)
-//       ? proj.Technologies
-//       : typeof proj?.skills_used === "string"
-//       ? [proj.skills_used]
-//       : [],
-//     duration: proj?.Duration || "",
-//     role: proj?.Role || "",
-//   }));
-// };
-
-// export const transformResumeData = (apiResponse) => {
-//   if (!apiResponse?.resume) {
-//     throw new Error("Invalid API response structure: missing resume data");
-//   }
-
-//   const { resume } = apiResponse;
-
-//   try {
-//     return {
-//       header: transformHeaderData(resume.Header || resume.header),
-//       summary:
-//         resume.Summary?.["Professional Summary"] ||
-//         resume.Summary ||
-//         resume.summary ||
-//         "",
-//       skills: Array.isArray(resume.Skills)
-//         ? resume.Skills.filter(Boolean)
-//         : Array.isArray(resume.skills)
-//         ? resume.skills.filter(Boolean)
-//         : [],
-//       // workExperience: transformWorkExperience(
-//       //   resume["Work Experience"] || resume.work_experience
-//       // ),
-//       workExperience: Array.isArray(resume["Work Experience"] || resume.work_experience)
-//         ? (resume["Work Experience"] || resume.work_experience).map((exp) => ({
-//             position: exp?.Position || exp?.position || "",
-//             company: exp?.Company || exp?.company_name || "",
-//             duration: exp?.Duration || exp?.duration || "",
-//             responsibilities: Array.isArray(exp?.Responsibilities)
-//               ? exp.Responsibilities
-//               : Array.isArray(exp?.responsibilities)
-//               ? exp.responsibilities
-//               : typeof exp?.Responsibilities === "string"
-//               ? [exp.Responsibilities]
-//               : typeof exp?.responsibilities === "string"
-//               ? [exp.responsibilities]
-//               : [],
-//           }))
-//         : [],
-//       education: [transformEducation(resume.Education || resume.education)],
-//       // academicProjects: transformProjects(
-//       //   resume["Academic Projects"] || resume.Academic_projects
-//       // ),
-//       academicProjects: Array.isArray(resume["Academic Projects"] || resume.Academic_projects || resume.academic_projects)
-//       ? (resume["Academic Projects"] || resume.Academic_projects || resume.academic_projects).map((proj) => ({
-//           name: proj?.["Project Name"] || proj?.name || "",
-//           description: proj?.Description || proj?.description || "",
-//           technologies: Array.isArray(proj?.Technologies)
-//             ? proj.Technologies
-//             : typeof proj?.skills_used === "string"
-//             ? [proj.skills_used]
-//             : [],
-//           duration: proj?.Duration || proj?.duration || "",
-//           role: proj?.Role || proj?.role || "",
-//         }))
-//       : [],
-//       certifications: Array.isArray(resume.Certifications)
-//         ? resume.Certifications.filter(Boolean)
-//         : Array.isArray(resume.certifications)
-//         ? resume.certifications.filter(Boolean)
-//         : [],
-//     };
-//   } catch (error) {
-//     console.error("Data transformation error:", error);
-//     throw new Error(`Failed to transform resume data: ${error.message}`);
-//   }
-// };
-export const transformHeaderData = (headerData = {}) => ({
-  Name: headerData?.Name || headerData?.name || "",
-  Email: headerData?.Email || headerData?.email || "",
-  Phone: headerData?.Phone || headerData?.phone || "",
-  GitHub: headerData?.GitHub || headerData?.github || "", 
-  LinkedIn: headerData?.LinkedIn || headerData?.linkedin || "",
-  Portfolio: headerData?.Portfolio || headerData?.portfolio || "",
-});
-
-export const transformWorkExperience = (workExp = []) => {
-  if (!Array.isArray(workExp)) return [];
-
-  return workExp.map((exp) => ({
-    position: exp?.Position || exp?.position || "",
-    company: exp?.Company || exp?.company_name || exp?.company || "",
-    duration: exp?.Duration || exp?.duration || "",
-    responsibilities: Array.isArray(exp?.Responsibilities)
-      ? exp.Responsibilities
-      : Array.isArray(exp?.responsibilities)
-      ? exp.responsibilities
-      : typeof exp?.Responsibilities === "string"
-      ? [exp.Responsibilities]
-      : typeof exp?.responsibilities === "string"
-      ? [exp.responsibilities]
-      : [],
-  }));
+// Utility functions
+const cleanString = (str) => {
+  if (!str) return '';
+  return typeof str === 'string' ? str.trim() : String(str).trim();
 };
 
-export const transformEducation = (edu = {}) => ({
-  degree: edu?.Degree || edu?.degree || "",
-  specialization: edu?.Specialization || edu?.specialization || "",
-  institution: edu?.Institution || edu?.institution || "",
-  graduationYear: edu?.["Graduation Year"] || edu?.graduation_year || "",
-});
+const ensureArray = (value) => {
+  if (!value) return [];
+  if (Array.isArray(value)) return value.map(cleanString).filter(Boolean);
+  if (typeof value === 'string') return value.split(',').map(item => cleanString(item)).filter(Boolean);
+  return [];
+};
+
+const normalizeObject = (obj) => {
+  if (!obj || typeof obj !== 'object') return {};
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    acc[key.toLowerCase()] = value;
+    return acc;
+  }, {});
+};
+
+export const transformHeaderData = (headerData = {}) => {
+  const normalized = normalizeObject(headerData);
+  
+  return {
+    name: cleanString(headerData?.name || normalized?.name || ''),
+    email: cleanString(headerData?.email || normalized?.email || ''),
+    phone: cleanString(headerData?.phone || normalized?.phone || ''),
+    github: cleanString(headerData?.github || normalized?.github || ''),
+    linkedin: cleanString(headerData?.linkedin || normalized?.linkedin || ''),
+    portfolio: cleanString(headerData?.portfolio || normalized?.portfolio || '')
+  };
+};
+
+export const transformWorkExperience = (workExp = []) => {
+  if (!workExp) return [];
+  const workArray = Array.isArray(workExp) ? workExp : [workExp];
+
+  return workArray
+    .filter(exp => exp && typeof exp === 'object')
+    .map(exp => {
+      const normalized = normalizeObject(exp);
+      let responsibilities = Array.isArray(exp.responsibilities)
+        ? exp.responsibilities
+        : typeof normalized.description === "string"
+        ? [normalized.description]
+        : [];
+
+      return {
+        position: cleanString(exp.position || normalized.position),
+        companyName: cleanString(exp.companyName || normalized.companyName),
+        duration: cleanString(exp.duration || normalized.duration),
+        responsibilities: responsibilities.map(cleanString).filter(Boolean),
+      };
+    })
+    .filter(exp => exp.position || exp.companyName);
+};
+
+export const transformEducation = (edu = []) => {
+  if (!edu) return [];
+  const eduArray = Array.isArray(edu) ? edu : [edu];
+
+  return eduArray
+    .filter(e => e && typeof e === 'object')
+    .map(e => {
+      const normalized = normalizeObject(e);
+      return {
+        degree: cleanString(e.degree || normalized.degree),
+        specialization: cleanString(e.specialization || normalized.specialization),
+        institution: cleanString(e.institution || normalized.institution),
+        graduationYear: cleanString(e.graduationYear || e.graduationyear || normalized.graduationyear || normalized.graduationYear)
+      };
+    });
+};
 
 export const transformProjects = (projects = []) => {
-  if (!Array.isArray(projects)) return [];
+  if (!projects) return [];
+  const projectArray = Array.isArray(projects) ? projects : [projects];
 
-  return projects.map((proj) => ({
-    name: proj?.["Project Name"] || proj?.name || "",
-    description: proj?.Description || proj?.description || "",
-    technologies: Array.isArray(proj?.Technologies)
-      ? proj.Technologies
-      : Array.isArray(proj?.technologies)
-      ? proj.technologies
-      : typeof proj?.skills_used === "string"
-      ? [proj.skills_used]
-      : [],
-    duration: proj?.Duration || proj?.duration || "",
-    role: proj?.Role || proj?.role || "",
-  }));
+  return projectArray
+    .filter(proj => proj && typeof proj === 'object')
+    .map(proj => {
+      const normalized = normalizeObject(proj);
+      
+      let technologies = [];
+      if (Array.isArray(proj.technologies)) {
+        technologies = proj.technologies;
+      } else if (typeof proj.skills_used === 'string') {
+        technologies = proj.skills_used.split(',');
+      } else if (typeof normalized.skills_used === 'string') {
+        technologies = normalized.skills_used.split(',');
+      }
+
+      return {
+        name: cleanString(proj.name || normalized.name),
+        description: cleanString(proj.description || normalized.description),
+        technologies: technologies.map(cleanString).filter(Boolean)
+      };
+    })
+    .filter(proj => proj.name);
+};
+
+export const transformSkills = (skillsData) => {
+  if (!skillsData) return [];
+
+  let skills = [];
+  
+  if (Array.isArray(skillsData)) {
+    skills = skillsData;
+  } else if (typeof skillsData === 'string') {
+    skills = skillsData.split(',');
+  } else if (skillsData?.skills) {
+    skills = Array.isArray(skillsData.skills) ? skillsData.skills : [skillsData.skills];
+  } else if (skillsData?.Skills) {
+    skills = Array.isArray(skillsData.Skills) ? skillsData.Skills : [skillsData.Skills];
+  }
+
+  return skills.map(cleanString).filter(Boolean);
+};
+
+export const transformSummary = (summaryData) => {
+  if (!summaryData) return '';
+  
+  if (typeof summaryData === 'string') {
+    return cleanString(summaryData);
+  }
+  
+  if (typeof summaryData === 'object') {
+    const normalized = normalizeObject(summaryData);
+    return cleanString(
+      summaryData.summary || 
+      summaryData.objective ||
+      normalized.summary ||
+      normalized.objective ||
+      ''
+    );
+  }
+  
+  return '';
+};
+
+export const transformCertifications = (certData) => {
+  if (!certData) return [];
+  
+  let certs = [];
+  if (Array.isArray(certData)) {
+    certs = certData;
+  } else if (typeof certData === 'string') {
+    certs = certData.split(',');
+  } else if (certData?.certifications) {
+    certs = Array.isArray(certData.certifications) ? 
+      certData.certifications : 
+      [certData.certifications];
+  } else if (typeof certData === 'object') {
+    certs = Object.values(certData);
+  }
+
+  return certs.map(cleanString).filter(Boolean);
 };
 
 export const transformResumeData = (apiResponse) => {
   if (!apiResponse?.resume) {
-    throw new Error("Invalid API response structure: missing resume data");
+    throw new Error('Invalid API response: missing resume data');
   }
+  console.log("apiResponse in transformResumeData fn ", apiResponse);
 
   const { resume } = apiResponse;
+  const normalized = normalizeObject(resume);
 
   try {
-    return {
-      header: transformHeaderData(resume.Header || resume.header),
-      summary:
-        resume.Summary?.["Professional Summary"] ||
-        resume.Summary ||
-        resume.summary ||
-        "",
-      skills: Array.isArray(resume.Skills)
-        ? resume.Skills.filter(Boolean)
-        : Array.isArray(resume.skills)
-        ? resume.skills.filter(Boolean)
-        : [],
+    const transformedData = {
+      header: transformHeaderData(resume.header || normalized.header),
+      summary: transformSummary(resume.summary || normalized.summary),
+      skills: transformSkills(resume.skills || normalized.skills),
       workExperience: transformWorkExperience(
-        resume["Work Experience"] || resume.work_experience
+        resume.workExperience || 
+        normalized.workExperience
       ),
-      education: [transformEducation(resume.Education || resume.education)],
-      academicProjects: transformProjects(
-        resume["Academic Projects"] || resume.Academic_projects || resume.academic_projects
+      education: transformEducation(resume.education || normalized.education),
+      projects: transformProjects(
+        resume.projects || 
+        normalized.projects
       ),
-      certifications: Array.isArray(resume.Certifications)
-        ? resume.Certifications.filter(Boolean)
-        : Array.isArray(resume.certifications)
-        ? resume.certifications.filter(Boolean)
-        : [],
+      certifications: transformCertifications(
+        resume.certifications || 
+        normalized.certifications
+      )
     };
+
+    Object.keys(transformedData).forEach(key => {
+      if (Array.isArray(transformedData[key])) {
+        transformedData[key] = transformedData[key].filter(Boolean);
+      }
+    });
+    console.log("transformedData in transformResumeData fn ", transformedData);
+
+    return transformedData;
   } catch (error) {
-    console.error("Data transformation error:", error);
+    console.error('Data transformation error:', error);
     throw new Error(`Failed to transform resume data: ${error.message}`);
   }
 };

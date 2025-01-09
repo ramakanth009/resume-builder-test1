@@ -1,0 +1,49 @@
+{
+    "message": "Resume generated successfully.",
+    "resume": {
+      "Academic Projects": [
+        {
+          "Description": "Built a shopping site using React, JS, and DOM, applying skills in frontend development and demonstrating understanding of web development concepts.",
+          "Name": "Shopping Site"
+        }
+      ],
+      "Certifications": [
+        "Certification by Microsoft"
+      ],
+      "Education": {
+        "Degree": "B.Tech",
+        "graduation_year": 2025,
+        "institution": "Siddhartha Group of Institutions",
+        "specialization": "ECE"
+      },
+      "Header": {
+        "email": "ramakanthkannuri@gmail.com",
+        "github": "https://github.com/kiranbhairava",
+        "linkedin": "https://www.linkedin.com/in/kiran-bhairava/",
+        "name": "Ramakanth Kannuri",
+        "phone": "9059912817",
+        "portfolio": "https://www.crio.do/learn/portfolio/ramakanthram014/?edit=true"
+      },
+      "Skills": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "Summary": "Dedicated and passionate data science professional with a strong foundation in computer science and a keen interest in leveraging data to drive business decisions. Proficient in frontend technologies such as HTML, CSS, and JavaScript, with experience in working on web development projects and supporting backend development. Seeking a role that allows me to apply my skills in data science and contribute to innovative projects.",
+      "Work Experience": [
+        {
+          "Company": "Any Company",
+          "Duration": "Jan 2022 - Jan 2023",
+          "Position": "Web Developer",
+          "Responsibilities": [
+            "Worked on web development and frontend technologies",
+            "Supported a little backend development",
+            "Collaborated with the team to deliver high-quality projects",
+            "Developed and maintained web applications using HTML, CSS, and JavaScript"
+          ]
+        }
+      ]
+    },
+    "status": "success"
+  }
+  

@@ -11,7 +11,11 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ResumeTemplate from "./resumetemplate2";
+import ResumeTemplate from "./resumetemplate1";
+import ResumeTemplate2 from "./resumetemplate2";
+import ResumeTemplate3 from "./resumetemplate3";
+import ResumeTemplate4 from "./resumetemplate4";
+import ResumeTemplate5 from "./resumetemplate5";
 import { transformResumeData } from "./resumehandler";
 
 const useStyles = {
@@ -71,6 +75,7 @@ const ResumeBuilder = () => {
         position: "",
         company_name: "",
         duration: "",
+        description: "",
       },
     ],
     skills: [""],
@@ -101,7 +106,7 @@ const ResumeBuilder = () => {
       ...prev,
       work_experience: [
         ...prev.work_experience,
-        { position: "", company_name: "", duration: "" },
+        { position: "", company_name: "", duration: "", description: "" },
       ],
     }));
   };
@@ -198,46 +203,23 @@ const ResumeBuilder = () => {
   const handleGeneratePreview = async () => {
     setLoading(true);
     setError(null);
-    setPreviewData(null);
-
     try {
-      const response = await fetch(
-        "http://127.0.0.1:5000/generate_fresher_resume",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
-
+      const response = await fetch("http://127.0.0.1:5000/generate_fresher_resume", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+  
       const data = await response.json();
       console.log("Raw API Response:", data);
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to generate resume");
-      }
-
-      if (!data || !data.resume) {
-        throw new Error("Invalid API response structure");
-      }
-
+      
       const transformedData = transformResumeData(data);
       console.log("Transformed Data:", transformedData);
+      
       setPreviewData(transformedData);
     } catch (err) {
-      console.error("Error in handleGeneratePreview:", err);
-      let errorMessage =
-        err.message || "Failed to generate resume. Please try again.";
-
-      if (err.message.includes("Invalid API response structure")) {
-        errorMessage =
-          "The resume couldn't be generated due to invalid data. Please check your inputs and try again.";
-      } else if (err.message.includes("Failed to transform")) {
-        errorMessage =
-          "There was an error processing the resume data. Please try again with different inputs.";
-      }
-
-      setError(errorMessage);
+      console.error("Transform Error:", err);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -362,6 +344,21 @@ const ResumeBuilder = () => {
                     )
                   }
                   placeholder="e.g., Jan 2024 - Present"
+                  sx={useStyles.inputField}
+                />
+                <TextField
+                  multiline
+                  rows={4}
+                  label="Description"
+                  value={exp.description}
+                  onChange={(e) =>
+                    handleWorkExperienceChange(
+                      index,
+                      "description",
+                      e.target.value
+                    )
+                  }
+                  placeholder="Describe your responsibilities and achievements"
                   sx={useStyles.inputField}
                 />
                 <IconButton
@@ -560,11 +557,14 @@ const ResumeBuilder = () => {
             </Alert>
           )}
 
-          {previewData && !loading && !error && (
-            <Box sx={{ mt: 2 }}>
-              <ResumeTemplate resumeData={previewData} />
-            </Box>
-          )}
+          {previewData &&
+            Object.keys(previewData).length > 0 &&
+            !loading &&
+            !error && (
+              <Box sx={{ mt: 2 }}>
+                <ResumeTemplate resumeData={previewData} />
+              </Box>
+            )}
         </Box>
       </Box>
     </Box>
