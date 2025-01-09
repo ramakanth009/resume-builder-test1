@@ -11,12 +11,13 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ResumeTemplate from "./resumetemplate1";
-import ResumeTemplate2 from "./resumetemplate2";
-import ResumeTemplate3 from "./resumetemplate3";
-import ResumeTemplate4 from "./resumetemplate4";
-import ResumeTemplate5 from "./resumetemplate5";
+import ResumeTemplate from "../Resumetemplates/resumetemplate1";
+// import ResumeTemplate2 from "./resumetemplate2";
+// import ResumeTemplate3 from "./resumetemplate3";
+// import ResumeTemplate4 from "./resumetemplate4";
+// import ResumeTemplate5 from "./resumetemplate5";
 import { transformResumeData } from "./resumehandler";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = {
   inputField: {
@@ -46,6 +47,11 @@ const useStyles = {
     backgroundColor: "#f5f5f5",
     borderRadius: "8px",
     padding: "20px",
+  },
+  previewheader:{
+    display: "flex",
+    justifyContent:"space-between",
+    alignItems: "center",
   },
   sectionTitle: {
     margin: "20px 0 10px",
@@ -92,6 +98,8 @@ const ResumeBuilder = () => {
     graduation_year: new Date().getFullYear(),
     certifications: [""],
   });
+
+  const navigate = useNavigate();
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -204,18 +212,21 @@ const ResumeBuilder = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://127.0.0.1:5000/generate_fresher_resume", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-  
+      const response = await fetch(
+        "http://127.0.0.1:5000/generate_fresher_resume",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+
       const data = await response.json();
       console.log("Raw API Response:", data);
-      
+
       const transformedData = transformResumeData(data);
       console.log("Transformed Data:", transformedData);
-      
+
       setPreviewData(transformedData);
     } catch (err) {
       console.error("Transform Error:", err);
@@ -536,10 +547,14 @@ const ResumeBuilder = () => {
 
         {/* Preview Section */}
         <Box sx={useStyles.previewSection}>
-          <Typography variant="h5" gutterBottom>
-            Preview
-          </Typography>
-
+          <Box sx={useStyles.previewheader}>
+            <Typography variant="h5" gutterBottom>
+              Preview
+            </Typography>
+            <Button variant="contained" onClick={() => navigate('/choose-template')}>
+              Choose Template
+            </Button>
+          </Box>
           {loading && (
             <Box
               display="flex"
