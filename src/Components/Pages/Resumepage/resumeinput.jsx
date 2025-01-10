@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -33,6 +33,7 @@ const useStyles = {
     display: "flex",
     gap: "20px",
     height: "calc(100% - 40px)",
+    
   },
   formSection: {
     flex: 1,
@@ -100,6 +101,13 @@ const ResumeBuilder = () => {
   });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('previewData');
+    if (storedData) {
+      setPreviewData(JSON.parse(storedData));
+    }
+  }, []);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -228,6 +236,7 @@ const ResumeBuilder = () => {
       console.log("Transformed Data:", transformedData);
 
       setPreviewData(transformedData);
+      localStorage.setItem('previewData', JSON.stringify(transformedData));
     } catch (err) {
       console.error("Transform Error:", err);
       setError(err.message);
@@ -551,7 +560,10 @@ const ResumeBuilder = () => {
             <Typography variant="h5" gutterBottom>
               Preview
             </Typography>
-            <Button variant="contained" onClick={() => navigate('/choose-template')}>
+            <Button
+              variant="contained"
+              onClick={() => navigate('/choose-template')}
+            >
               Choose Template
             </Button>
           </Box>

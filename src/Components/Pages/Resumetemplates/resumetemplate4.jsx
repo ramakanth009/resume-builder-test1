@@ -21,9 +21,9 @@ const useStyles = makeStyles({
     },
   },
   root: {
-    width: "100%",
-    maxWidth: "1200px",
-    margin: "0 auto",
+    // width: "100%",
+    // maxWidth: "1200px",
+    // margin: "0 auto",
   },
   paper: {
     margin: "32px 0",
@@ -230,7 +230,7 @@ const ResumeTemplate = ({ resumeData }) => {
   }
 
   return (
-    <Container maxWidth="lg" className={classes.root}>
+    <Container maxWidth="md" className={classes.root}>
       <Paper elevation={3} className={classes.paper}>
         <Box className={classes.header}>
           <Typography variant="h3" component="h1" className={classes.headerName}>

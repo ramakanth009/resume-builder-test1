@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     margin: "32px 0",
     boxSizing: "border-box",
     borderRadius: "0",
-    backgroundColor: "#FFFFFF",
+    // backgroundColor: "#FFFFFF",
   },
   subContainer: {
     display: "flex",
@@ -207,8 +207,8 @@ const ResumeTemplate = ({ resumeData }) => {
   }
 
   return (
-    <Container maxWidth="lg">
-      <Paper elevation={0} className={classes.paper}>
+    <Container maxWidth="md">
+      <Paper elevation={3} className={classes.paper}>
         <Box className={classes.mainContainer}>
           {/* Header */}
           <Box sx={{ mb: 4, pb: 3 }} className={classes.headerBox}>
