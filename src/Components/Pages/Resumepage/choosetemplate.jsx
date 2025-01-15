@@ -60,12 +60,12 @@ const ChooseTemplate = () => {
   const [selectedTemplate, setSelectedTemplate] = useState("template1");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedData = localStorage.getItem("previewData");
-    if (storedData) {
-      setPreviewData(JSON.parse(storedData));
-    }
-  }, []);
+  // useEffect(() => {
+    // const storedData = localStorage.getItem("previewData");
+    // if (storedData) {
+      // setPreviewData(JSON.parse(storedData));
+    // }
+  // }, []);
 
   const renderTemplate = () => {
     switch (selectedTemplate) {
