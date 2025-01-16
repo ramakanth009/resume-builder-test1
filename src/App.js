@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import LandingPage from './Components/Pages/Resumepage/landingpage.jsx';
 import ResumeBuilder from './Components/Pages/Resumepage/resumeinput.jsx';
-import ChooseTemplate from './Components/Pages/Resumepage/choosetemplate.jsx';
+import ChooseTemplate from './Components/Pages/Resumepage/choosetemplate2.jsx';
 // import Entrylevel from './Components/Pages/Resumepage/Entrylevel/entrylevel.jsx';
 
 
